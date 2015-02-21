@@ -7,43 +7,94 @@
 </body>
 
 
+<template name="highscore">
+  <div class="container highscores">
+    <h1>HIGHSCORE</h1>
+    <div class="row">
+      {{#each top10}}
+        <div class="col-sm-1 score-place">{{place}}.</div>
+        <div class="col-sm-4 score-name">{{name}}</div>
+        <div class="col-sm-1">{{niceDuration lap1}}</div>
+        <div class="col-sm-1">{{niceDuration lap2}}</div>
+        <div class="col-sm-1">{{niceDuration lap3}}</div>
+        <div class="col-sm-1">{{niceDuration lap4}}</div>
+        <div class="col-sm-1">{{niceDuration lap5}}</div>
+        <div class="col-sm-2 score-final">{{niceDuration final}}</div>
+      {{/each}}
+    </div>
+  </div>
+</template>
+
 <template name="main">
-  <button class="start">start</button>
-  <button class="stage1">stage1</button>
-  <button class="stage2">stage2</button>
-  <button class="stage3">stage3</button>
-  <button class="stage4">stage4</button>
-  <button class="finish">finish</button>
-  <button class="reset">reset</button>
-  <form>
+    <button class="start">start</button>
+    <button class="stage1">stage1</button>
+    <button class="stage2">stage2</button>
+    <button class="stage3">stage3</button>
+    <button class="stage4">stage4</button>
+    <button class="finish">finish</button>
+    <button class="reset">reset</button>
+    <form>
     <input type="text" class="usertext">
   </form>
 
-  {{#if failed}}
-    <h4>FAILED!</h4>
-  {{/if}}
-  {{#unless idle}}
-    <h1>time: {{playerTime}}</h1>
-  {{/unless}}
+  <div class="row time">
+    {{#if failed}}
+      <h1 class="failed">FAILED!</h1>
+    {{/if}}
+    {{#unless idle}}
+      <h1>{{playerTime}}</h1>
+    {{/unless}}
+
+    {{#if idle}}
+      <h1 class="ready">Ready</h1>
+    {{/if}}
+    {{#if stage1}}
+      <div class="row stage">
+        <div class="col-sm-4 text-left">lap 1</div>
+        <div class="col-sm-4">{{stage1Time}}</div>
+        <div class="col-sm-4">{{stage1Distance}}</div>
+      </div>
+    {{/if}}
+    {{#if stage2}}
+    <div class="row stage">
+      <div class="col-sm-4 text-left">lap 2</div>
+      <div class="col-sm-4">{{stage2Time}}</div>
+      <div class="col-sm-4">{{stage2Distance}}</div>
+    </div>
+    {{/if}}
+    {{#if stage3}}
+    <div class="row stage">
+      <div class="col-sm-4 text-left">lap 3</div>
+      <div class="col-sm-4">{{stage3Time}}</div>
+      <div class="col-sm-4">{{stage3Distance}}</div>
+    </div>
+    {{/if}}
+    {{#if stage4}}
+    <div class="row stage">
+      <div class="col-sm-4 text-left">lap 4</div>
+      <div class="col-sm-4">{{stage4Time}}</div>
+      <div class="col-sm-4">{{stage4Distance}}</div>
+    </div>
+    {{/if}}
+    {{#if finished}}
+    <div class="row stage finish">
+      <div class="col-sm-4 text-left">Finish</div>
+      <div class="col-sm-4">{{playerTime}}</div>
+      <div class="col-sm-4">{{finishDistance}}</div>
+    </div>
+    {{/if}}
+  </div>
+
+  <hr>
 
 
-  {{#if idle}}
-    <div class="ready">Ready</div>
-  {{/if}}
-  {{#if stage1}}
-    <div class="stage">Stage 1: {{stage1Time}}  {{stage1Distance}}</div>
-  {{/if}}
-  {{#if stage2}}
-    <div class="stage">Stage 2: {{stage2Time}}  {{stage2Distance}}</div>
-  {{/if}}
-  {{#if stage3}}
-    <div class="stage">Stage 3: {{stage3Time}}  {{stage3Distance}}</div>
-  {{/if}}
-  {{#if stage4}}
-    <div class="stage">Stage 4: {{stage4Time}}  {{stage4Distance}}</div>
-  {{/if}}
   {{#if finished}}
-    <div class="start">Finish: {{playerTime}}  {{finishDistance}}</div>
+    {{> highscore}}
   {{/if}}
+  {{#if idle}}
+    {{> highscore}}
+  {{/if}}
+
+
 
 </template>

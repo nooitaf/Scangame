@@ -1,3 +1,8 @@
+
+Scores = new Mongo.Collection('scores');
+
+
+
 poep = function(){
   console.log(
     Session.get('start'),
@@ -35,16 +40,25 @@ pad3 = function(x){
     return x;
   }
 }
-niceDuration = function(start,end){
+diffDuration = function(start,end){
   var startTime = moment(parseInt(start));
   var finishTime = moment(parseInt(end));
   var d = moment.duration(finishTime.diff(startTime));
+  return d;
+}
+niceDuration = function(d){
   if (d.get('m')) {
     return d.get('m') + ":" + pad2(d.get('s')) + '.' + pad3(d.get('ms'));
   } else {
     return d.get('s') + '.' + pad3(d.get('ms'));
   }
 }
+rawDuration = function(start,end){
+  var startTime = moment(parseInt(start));
+  var finishTime = moment(parseInt(end));
+  return finishTime.diff(startTime);
+}
+
 
 game_start = function(){
   Session.set('playing',true);
@@ -111,7 +125,20 @@ game_input = function(str){
     Session.set('pos',5);
     game_stage4();
   } else if (str === 'game_5' && Session.get('pos') === 5) {
+    Session.set('pos',6);
     game_finish();
+  } else if (Session.get('pos') === 6 && str) {
+    var score = {
+      lap1  : rawDuration(Session.get('start'),Session.get('stage-1')),
+      lap2  : rawDuration(Session.get('stage-1'),Session.get('stage-2')),
+      lap3  : rawDuration(Session.get('stage-2'),Session.get('stage-3')),
+      lap4  : rawDuration(Session.get('stage-3'),Session.get('stage-4')),
+      lap5  : rawDuration(Session.get('stage-4'),Session.get('finish')),
+      final : rawDuration(Session.get('start'),Session.get('finish')),
+      name  : str
+    }
+    Scores.insert(score);
+    game_reset();
   } else {
     game_fail();
   }
@@ -121,24 +148,31 @@ game_input = function(str){
 Template.main.events({
   'click .start':function(){
     game_start();
+    Session.set('pos',1);
   },
   'click .stage1':function(){
     game_stage1();
+    Session.set('pos',2);
   },
   'click .stage2':function(){
     game_stage2();
+    Session.set('pos',3);
   },
   'click .stage3':function(){
     game_stage3();
+    Session.set('pos',4);
   },
   'click .stage4':function(){
     game_stage4();
+    Session.set('pos',5);
   },
   'click .finish':function(){
     game_finish();
+    Session.set('pos',6);
   },
   'click .reset':function(){
     game_reset();
+    Session.set('pos',0);
   },
   'submit form':function(e,t){
     e.preventDefault();
@@ -160,34 +194,34 @@ Template.main.helpers({
     return !Session.get('playing') && !Session.get('finished');
   },
   playerTime:function(){
-    return niceDuration(Session.get('start'),Session.get('finish'));
+    return niceDuration(diffDuration(Session.get('start'),Session.get('finish')));
   },
   stage1Time:function(){
-    return niceDuration(Session.get('start'),Session.get('stage-1'));
+    return niceDuration(diffDuration(Session.get('start'),Session.get('stage-1')));
   },
   stage2Time:function(){
-    return niceDuration(Session.get('start'),Session.get('stage-2'));
+    return niceDuration(diffDuration(Session.get('start'),Session.get('stage-2')));
   },
   stage3Time:function(){
-    return niceDuration(Session.get('start'),Session.get('stage-3'));
+    return niceDuration(diffDuration(Session.get('start'),Session.get('stage-3')));
   },
   stage4Time:function(){
-    return niceDuration(Session.get('start'),Session.get('stage-4'));
+    return niceDuration(diffDuration(Session.get('start'),Session.get('stage-4')));
   },
   stage1Distance:function(){
-    return niceDuration(Session.get('start'),Session.get('stage-1'));
+    return niceDuration(diffDuration(Session.get('start'),Session.get('stage-1')));
   },
   stage2Distance:function(){
-    return niceDuration(Session.get('stage-1'),Session.get('stage-2'));
+    return niceDuration(diffDuration(Session.get('stage-1'),Session.get('stage-2')));
   },
   stage3Distance:function(){
-    return niceDuration(Session.get('stage-2'),Session.get('stage-3'));
+    return niceDuration(diffDuration(Session.get('stage-2'),Session.get('stage-3')));
   },
   stage4Distance:function(){
-    return niceDuration(Session.get('stage-3'),Session.get('stage-4'));
+    return niceDuration(diffDuration(Session.get('stage-3'),Session.get('stage-4')));
   },
   finishDistance:function(){
-    return niceDuration(Session.get('stage-4'),Session.get('finish'));
+    return niceDuration(diffDuration(Session.get('stage-4'),Session.get('finish')));
   },
   stage1:function(){
     return Session.get('stage-1');
@@ -206,5 +240,22 @@ Template.main.helpers({
   },
   failed:function(){
     return Session.get('failed');
+  }
+})
+
+
+
+
+Template.highscore.helpers({
+  top10:function(){
+    var scores = Scores.find({},{sort:{final:1},limit:10}).fetch();
+    return _.map(scores,function(item){
+      item['place'] = _.indexOf(scores,item) + 1
+      return item;
+    });
+  },
+  niceDuration:function(duration){
+    var d = moment.duration(duration);
+    return niceDuration(d);
   }
 })

@@ -1,0 +1,110 @@
+html,body {
+  background:black;
+  margin:0px;
+  padding:20px;
+  color:white;
+}
+button,input {
+  background:black;
+  border:1px solid white;
+  border:none;
+  color:white;
+}
+hr {
+  border-color:#666;
+}
+.time > h1.failed {
+  font-size:72px;
+  color:red;
+  border-bottom:none;
+  padding:20px;
+  margin:0px;
+  text-align:center;
+  font-weight:800;
+  letter-spacing:2px;
+  width:500px;
+  margin-left:auto;
+  margin-right:auto;
+  background:black;
+}
+.time > h1.ready {
+  font-size:72px;
+  color:rgb(120,250,100);
+  border-bottom:none;
+  padding:20px;
+  margin:0px;
+  text-align:center;
+  font-weight:800;
+  letter-spacing:2px;
+  width:500px;
+  margin-left:auto;
+  margin-right:auto;
+  background:black;
+}
+
+.time > h1 {
+  font-size:72px;
+  color:white;
+  border-bottom:none;
+  padding:20px;
+  margin:0px;
+  text-align:right;
+  font-weight:200;
+  letter-spacing:2px;
+  width:500px;
+  margin-left:auto;
+  margin-right:auto;
+  background:black;
+
+}
+.time > .stage {
+  font-size:18px;
+  color:yellow;
+  border-bottom:none;
+  padding:8px;
+  margin:0px;
+  text-align:right;
+  font-weight:200;
+  letter-spacing:2px;
+  width:500px;
+  margin-left:auto;
+  margin-right:auto;
+  background:black;
+}
+
+
+.highscores {
+  font-size:16px;
+  background:black;
+  color:gray;
+  /* border:3px solid white; */
+  padding:20px;
+  line-height:48px;
+}
+.highscores > h1 {
+  font-size:42px;
+  color:white;
+  border-bottom:none;
+  padding:0px;
+  padding-bottom:20px;
+  margin:0px;
+  text-align:center;
+  font-weight:200;
+  letter-spacing:2px;
+}
+.score-final {
+  font-weight:300;
+  font-size:32px;
+  color:white;
+}
+.score-place {
+  font-weight:300;
+  font-size:32px;
+  color:white;
+  text-align: right;
+}
+.score-name {
+  font-weight:300;
+  font-size:32px;
+  color:white;
+}
