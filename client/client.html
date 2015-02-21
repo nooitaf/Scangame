@@ -1,0 +1,49 @@
+<head>
+  <title>scangame</title>
+</head>
+
+<body>
+  {{> main}}
+</body>
+
+
+<template name="main">
+  <button class="start">start</button>
+  <button class="stage1">stage1</button>
+  <button class="stage2">stage2</button>
+  <button class="stage3">stage3</button>
+  <button class="stage4">stage4</button>
+  <button class="finish">finish</button>
+  <button class="reset">reset</button>
+  <form>
+    <input type="text" class="usertext">
+  </form>
+
+  {{#if failed}}
+    <h4>FAILED!</h4>
+  {{/if}}
+  {{#unless idle}}
+    <h1>time: {{playerTime}}</h1>
+  {{/unless}}
+
+
+  {{#if idle}}
+    <div class="ready">Ready</div>
+  {{/if}}
+  {{#if stage1}}
+    <div class="stage">Stage 1: {{stage1Time}}  {{stage1Distance}}</div>
+  {{/if}}
+  {{#if stage2}}
+    <div class="stage">Stage 2: {{stage2Time}}  {{stage2Distance}}</div>
+  {{/if}}
+  {{#if stage3}}
+    <div class="stage">Stage 3: {{stage3Time}}  {{stage3Distance}}</div>
+  {{/if}}
+  {{#if stage4}}
+    <div class="stage">Stage 4: {{stage4Time}}  {{stage4Distance}}</div>
+  {{/if}}
+  {{#if finished}}
+    <div class="start">Finish: {{playerTime}}  {{finishDistance}}</div>
+  {{/if}}
+
+</template>
