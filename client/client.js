@@ -108,23 +108,23 @@ game_fail = function(){
   Session.set('failed',true);
 }
 game_input = function(str){
-  if (str === 'game') {
+  if (str === 'GAME') {
     game_reset();
     game_start();
     Session.set('pos',1);
-  } else if (str === 'game_1' && Session.get('pos') === 1) {
+  } else if (str === 'GAME_1' && Session.get('pos') === 1) {
     Session.set('pos',2);
     game_stage1();
-  } else if (str === 'game_2' && Session.get('pos') === 2) {
+  } else if (str === 'GAME_2' && Session.get('pos') === 2) {
     Session.set('pos',3);
     game_stage2();
-  } else if (str === 'game_3' && Session.get('pos') === 3) {
+  } else if (str === 'GAME_3' && Session.get('pos') === 3) {
     Session.set('pos',4);
     game_stage3();
-  } else if (str === 'game_4' && Session.get('pos') === 4) {
+  } else if (str === 'GAME_4' && Session.get('pos') === 4) {
     Session.set('pos',5);
     game_stage4();
-  } else if (str === 'game_5' && Session.get('pos') === 5) {
+  } else if (str === 'GAME_5' && Session.get('pos') === 5) {
     Session.set('pos',6);
     game_finish();
   } else if (Session.get('pos') === 6 && str) {
