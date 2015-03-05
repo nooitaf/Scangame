@@ -128,6 +128,7 @@ game_input = function(str){
     Session.set('pos',6);
     game_finish();
   } else if (Session.get('pos') === 6 && str) {
+    Session.set('pos',0);
     var score = {
       lap1  : rawDuration(Session.get('start'),Session.get('stage-1')),
       lap2  : rawDuration(Session.get('stage-1'),Session.get('stage-2')),
