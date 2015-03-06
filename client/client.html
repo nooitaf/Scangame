@@ -26,6 +26,7 @@
 </template>
 
 <template name="main">
+  <div class="testbuttons">
     <button class="start">start</button>
     <button class="stage1">stage1</button>
     <button class="stage2">stage2</button>
@@ -34,8 +35,9 @@
     <button class="finish">finish</button>
     <button class="reset">reset</button>
     <form>
-    <input type="text" class="usertext">
-  </form>
+      <input type="text" class="usertext">
+    </form>
+  </div>
 
   <div class="row time">
     {{#if failed}}

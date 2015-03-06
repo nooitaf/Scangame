@@ -72,6 +72,9 @@ hr {
   background:black;
 }
 
+.testbuttons {
+  display: none;
+}
 
 .highscores {
   font-size:16px;
@@ -96,6 +99,7 @@ hr {
   font-weight:300;
   font-size:32px;
   color:white;
+  text-align: right;
 }
 .score-place {
   font-weight:300;
