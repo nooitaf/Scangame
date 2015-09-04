@@ -6,7 +6,7 @@ Meteor port of scanfoo revbank [https://github.com/psy0rz/revbank](https://githu
 * Meteor server
 * MongoDB
 
-##### Client (Bar)
+##### Client (Screen+Scanner)
 * Boot System
 * Autologin
 * Autostart Browser:  `chromium --kiosk http://server.url`
